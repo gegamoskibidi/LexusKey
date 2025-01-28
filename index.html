@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get License</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .key-display {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #4caf50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Get Your License Key</h1>
+        <p>Click the button below to complete the verification process and receive your license key.</p>
+        <button id="getLicenseButton">Get License</button>
+        <div class="key-display" id="keyDisplay"></div>
+    </div>
+
+    <script>
+        document.getElementById('getLicenseButton').addEventListener('click', async () => {
+            // Step 1: Open Linkvertise in a new tab
+            const linkvertiseUrl = "https://pastebin.com/raw/4YizN27p"; // Replace with your Linkvertise link
+            window.open(linkvertiseUrl, '_blank');
+
+            // Step 2: Wait for user to complete Linkvertise
+            const userConfirmed = confirm("Did you complete the Linkvertise verification?");
+            if (!userConfirmed) {
+                alert("Please complete the Linkvertise verification to get your key.");
+                return;
+            }
+
+            // Step 3: Fetch a random key from Pastebin
+            const pastebinUrl = "https://pastebin.com/raw/4YizN27p";
+            try {
+                const response = await fetch(pastebinUrl);
+                if (!response.ok) throw new Error("Failed to fetch keys.");
+
+                const keys = (await response.text()).split(/\r?\n/).filter(key => key.trim() !== "");
+                if (keys.length === 0) throw new Error("No keys available.");
+
+                // Step 4: Display a random key
+                const randomKey = keys[Math.floor(Math.random() * keys.length)];
+                document.getElementById('keyDisplay').textContent = `Your Key: ${randomKey}`;
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+    </script>
+</body>
+</html>
